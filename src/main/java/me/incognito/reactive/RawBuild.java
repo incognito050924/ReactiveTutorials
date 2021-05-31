@@ -39,8 +39,7 @@ public class RawBuild {
             @Override
             public void onSubscribe(Subscription s) {
                 log.info("{} onSubscribe: {}", name, s);
-                s.request(3);
-                s.request(3);
+                s.request(100);
                 s.cancel();
             }
 
@@ -95,7 +94,6 @@ public class RawBuild {
     }
 
     public static void main(String[] args) {
-        intPub().subscribe(sub("B"));
         intPub().subscribe(sub("A"));
     }
 }
