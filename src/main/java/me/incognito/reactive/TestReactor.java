@@ -34,5 +34,11 @@ public class TestReactor {
     }
 
     public static void main(String[] args) throws InterruptedException {
+        Flux.fromStream(Stream.iterate(0, i -> i+1).limit(10))
+                .map(i -> i + 1)
+                .flatMap(i -> Flux.just(i, i, i))
+//                .filter(i -> i % 2 == 0)
+//                .reduce(0, (acc, i) -> acc + i)
+                .subscribe(item -> log.info("Item: {}", item), throwable -> log.error("msg: {}", throwable.getMessage()));
     }
 }
