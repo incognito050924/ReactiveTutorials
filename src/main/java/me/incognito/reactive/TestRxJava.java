@@ -1,5 +1,7 @@
 package me.incognito.reactive;
 
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.ForkJoinWorkerThread;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.rxjava3.core.Flowable;
@@ -27,7 +29,11 @@ public class TestRxJava {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        single();
-        TimeUnit.MINUTES.sleep(1);
+//        single();
+        infinite();
+        ForkJoinWorkerThread.currentThread().join();
+        ForkJoinPool.commonPool().shutdown();
+        ForkJoinPool.commonPool().awaitTermination(10, TimeUnit.SECONDS);
+//        TimeUnit.MINUTES.sleep(1);
     }
 }

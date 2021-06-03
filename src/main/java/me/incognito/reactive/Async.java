@@ -7,6 +7,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
@@ -82,7 +83,13 @@ public class Async {
     public static void main(String[] args) throws Exception {
 //        futureTest();
 //        listenableFutureTest();
-        completableFutureTest();
+//        completableFutureTest();
+
+        CompletableFuture.supplyAsync(Async.stringSupplier)
+                .thenAccept(System.out::println);
+
+        ForkJoinPool.commonPool().shutdown();
+        ForkJoinPool.commonPool().awaitTermination(10, TimeUnit.SECONDS);
 
         ES.shutdown();
         log.info("Finished");
